@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 
 namespace repeat
@@ -19,9 +20,17 @@ namespace repeat
                 FileName = _command, 
                 Arguments = parameters
             };
+            pi.CreateNoWindow = true;
+            pi.UseShellExecute = false;
+            pi.RedirectStandardOutput = true;
 
             var p = new Process {StartInfo = pi};
             p.Start();
+            p.WaitForExit();
+
+            var output = p.StandardOutput.ReadToEnd();
+            Console.WriteLine($"{output}");
+            p.Close();
         }
     }
 }
