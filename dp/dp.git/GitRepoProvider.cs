@@ -33,7 +33,7 @@ namespace dp.git
         }
 
 
-        public (int Changed, int Added, int Deleted, int Other) Status
+        public (int Modified, int Added, int Deleted, int Other) Status
         {
             get {
                 (int Modified, int Added, int Deleted, int Other) status = (0, 0, 0, 0);
