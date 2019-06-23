@@ -24,11 +24,11 @@ namespace dp.git
         }
 
 
-        public string Commit(string message) {
-            var author = new Signature("dp-record", "dp-record@deliberate-programming.org", DateTime.Now);
-            var committer = author;
+        public string Commit(string message, string authorName, string authorEmail) {
+            var authorSig = new Signature(authorName, authorEmail, DateTime.Now);
 
-            var commit = _repo.Commit(message, author, committer);
+            var commit = _repo.Commit(message, authorSig, authorSig);
+            
             return commit.Sha;
         }
 

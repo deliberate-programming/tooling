@@ -73,7 +73,7 @@ namespace dp.git.tests
                 status = sut.Status;
                 Assert.Equal((0,1,0,0), status);
 
-                var sha = sut.Commit("committing a.txt");
+                var sha = sut.Commit("committing a.txt", "test", "test@acme.com");
                 _testOutputHelper.WriteLine($"Commit SHA: {sha}");
                 
                 status = sut.Status;
