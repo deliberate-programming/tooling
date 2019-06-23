@@ -1,3 +1,4 @@
+using System;
 using dp.git;
 using dp_record.adapters;
 
@@ -7,18 +8,21 @@ namespace dp_record
     {
         private readonly IConsoleLog _log;
         private readonly GitRepoProvider _git;
+        private readonly Func<int, IRepeater> _repeaterFactory;
         private readonly Stopwatch _stopwatch;
 
-        public App(IConsoleLog log, GitRepoProvider git) {
+        public App(IConsoleLog log, GitRepoProvider git) : this(log, git, intervalSeconds => new Repeater(intervalSeconds)) {}
+        internal App(IConsoleLog log, GitRepoProvider git, Func<int,IRepeater> repeaterFactory) {
             _log = log;
             _git = git;
+            _repeaterFactory = repeaterFactory;
             _stopwatch = new Stopwatch();
         }
 
 
         public void Run(string[] args) {
             var cli = new CLI(args);
-            using (var rep = new Repeater(cli.IntervalSeconds))  {
+            using (var rep = _repeaterFactory(cli.IntervalSeconds))  {
                 _stopwatch.Start();
                 rep.StartInBackground(
                     Commit_pending_changes
@@ -31,6 +35,7 @@ namespace dp_record
         void Commit_pending_changes() {
             var status = _git.Status;
             if (pending_changes_exist()) {
+                _git.StageAllChanges();
                 var sha = _git.Commit(message(), "dp-record", "dp-record@deliberate-programming.org");
                 _log.Add(status, sha, _stopwatch.RunningTime);
                 _stopwatch.Reset();

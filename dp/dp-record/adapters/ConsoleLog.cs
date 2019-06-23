@@ -19,6 +19,8 @@ namespace dp_record.adapters
             Console.WriteLine();
             
             _logEntryCount = 0;
+
+            Console.ReadLine();
         }
 
         public void Add((int Modified, int Added, int Deleted, int Other) gitStatus, string commitSha, TimeSpan elapsedTimeSincePreviousCommit) {

@@ -3,7 +3,13 @@ using System.Threading;
 
 namespace dp_record.adapters
 {
-    class Repeater : IDisposable
+    internal interface IRepeater : IDisposable {
+        void StartInBackground(Action onTick);
+        void Stop();
+    }
+
+    
+    class Repeater : IRepeater
     {
         private readonly int _intervalSeconds;
         private Timer _timer;
