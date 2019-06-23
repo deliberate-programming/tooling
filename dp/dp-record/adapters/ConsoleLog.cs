@@ -24,7 +24,7 @@ namespace dp_record.adapters
         }
 
         public void Add((int Modified, int Added, int Deleted, int Other) gitStatus, string commitSha, TimeSpan elapsedTimeSincePreviousCommit) {
-            Console.WriteLine($"{++_logEntryCount} {DateTime.Now:g}, {elapsedTimeSincePreviousCommit.TotalMinutes}min: {commitSha.Substring(0,5)}(!{gitStatus.Modified},+{gitStatus.Added},-{gitStatus.Deleted},?{gitStatus.Other})");
+            Console.WriteLine($"{++_logEntryCount:00}. {DateTime.Now:g}, {elapsedTimeSincePreviousCommit.TotalMinutes:F1}min: {commitSha.Substring(0,5)}(!{gitStatus.Modified},+{gitStatus.Added},-{gitStatus.Deleted},?{gitStatus.Other})");
         }
     }
 }
