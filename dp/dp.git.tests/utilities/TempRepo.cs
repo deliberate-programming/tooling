@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using LibGit2Sharp;
 
-namespace dp.git.tests
+namespace dp.git.tests.utilities
 {
     class TempRepo : IDisposable
     {
