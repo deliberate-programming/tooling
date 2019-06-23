@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using dp.git.tests.utilities;
 using Xunit;
 using Xunit.Abstractions;
 
