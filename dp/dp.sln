@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dp.git.tests", "dp.git.test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dp-record", "dp-record\dp-record.csproj", "{EDC0C5A7-9AD3-45FD-9B1E-86D74023F4BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dp-record.tests", "dp-record.tests\dp-record.tests.csproj", "{9CEC197B-EA5C-4CB5-A287-CE225A473977}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{EDC0C5A7-9AD3-45FD-9B1E-86D74023F4BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDC0C5A7-9AD3-45FD-9B1E-86D74023F4BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDC0C5A7-9AD3-45FD-9B1E-86D74023F4BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CEC197B-EA5C-4CB5-A287-CE225A473977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CEC197B-EA5C-4CB5-A287-CE225A473977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CEC197B-EA5C-4CB5-A287-CE225A473977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CEC197B-EA5C-4CB5-A287-CE225A473977}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
