@@ -23,8 +23,8 @@ namespace dp_record.tests
             var repoPath = "acceptance";
             using (new TempRepo(repoPath))
             {
-                var mockLog = new MockConsoleLog();
                 MockRepeater rep = null;
+                var mockLog = new MockConsoleLog();
                 var sut = new App(mockLog, 
                                   new GitRepoProvider(repoPath),
                                   _ => {
@@ -32,10 +32,11 @@ namespace dp_record.tests
                                       return rep;
                                   });
                 
+                // mockLog is blocking to keep the Repeater alive. Hence the App needs to run in the background.
                 ThreadPool.QueueUserWorkItem(_ => {
                     sut.Run(new[]{"60"});
                 }, null);
-                Thread.Sleep(1000);
+                Thread.Sleep(1000); // wait for everything to be initialized
                 
                 File.WriteAllText(repoPath + "/a.txt", "a");
                 rep.Tick();

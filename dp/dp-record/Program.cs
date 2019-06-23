@@ -3,7 +3,7 @@ using dp_record.adapters;
 
 namespace dp_record
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args) {
             var app = new App(

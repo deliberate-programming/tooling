@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using dp.git.tests.utilities;
+using LibGit2Sharp;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -78,6 +79,19 @@ namespace dp.git.tests
                 
                 status = sut.Status;
                 Assert.Equal((0,0,0,0), status);
+            }
+        }
+        
+        
+        [Fact]
+        public void Commit_throws_an_exception_if_there_is_nothing_to_commit() {
+            var repoPath = "commitex";
+            using (new TempRepo(repoPath)) {
+                var sut = new GitRepoProvider(repoPath);
+                
+                sut.Commit("initial", "test", "test@acme.com"); // the initial commit is always working
+
+                Assert.Throws<EmptyCommitException>(() => sut.Commit("failing", "test", "test@acme.com"));
             }
         }
     }
