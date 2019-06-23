@@ -30,27 +30,27 @@ namespace dp.git.tests
                 var sut = new GitRepoProvider(repoPath);
 
                 var status = sut.Status;
-                Assert.Equal((0,0,0), status);
+                Assert.Equal((0,0,0,0), status);
                 
                 File.WriteAllText(repoPath + "/a.txt", "a");
                 status = sut.Status;
-                Assert.Equal((0,1,0), status);
+                Assert.Equal((0,1,0,0), status);
                 
                 File.Delete(repoPath + "/a.txt");
                 status = sut.Status;
-                Assert.Equal((0,0,0), status);
+                Assert.Equal((0,0,0,0), status);
                 
                 File.WriteAllText(repoPath + "/ab.txt", "ab");
                 status = sut.Status;
-                Assert.Equal((0,1,0), status);
+                Assert.Equal((0,1,0,0), status);
                 
                 sut.StageAllChanges();
                 status = sut.Status;
-                Assert.Equal((0,1,0), status);
+                Assert.Equal((0,1,0,0), status);
                 
                 File.Delete(repoPath + "/ab.txt");
                 status = sut.Status;
-                Assert.Equal((0,0,1), status);
+                Assert.Equal((0,0,1,0), status);
             }
         }
 
@@ -63,21 +63,21 @@ namespace dp.git.tests
                 var sut = new GitRepoProvider(repoPath);
 
                 var status = sut.Status;
-                Assert.Equal((0,0,0), status);
+                Assert.Equal((0,0,0,0), status);
                 
                 File.WriteAllText(repoPath + "/a.txt", "a");
                 status = sut.Status;
-                Assert.Equal((0,1,0), status);
+                Assert.Equal((0,1,0,0), status);
                 
                 sut.StageAllChanges();
                 status = sut.Status;
-                Assert.Equal((0,1,0), status);
+                Assert.Equal((0,1,0,0), status);
 
                 var sha = sut.Commit("committing a.txt");
                 _testOutputHelper.WriteLine($"Commit SHA: {sha}");
                 
                 status = sut.Status;
-                Assert.Equal((0,0,0), status);
+                Assert.Equal((0,0,0,0), status);
             }
         }
     }

@@ -33,10 +33,10 @@ namespace dp.git
         }
 
 
-        public (int Changed, int Added, int Deleted) Status
+        public (int Changed, int Added, int Deleted, int Other) Status
         {
             get {
-                (int Modified, int Added, int Deleted) status = (0, 0, 0);
+                (int Modified, int Added, int Deleted, int Other) status = (0, 0, 0, 0);
                 
                 foreach (var item in _repo.RetrieveStatus(new StatusOptions()).Where(i => i.State != FileStatus.Ignored)) {
                     /*
@@ -52,8 +52,12 @@ namespace dp.git
                              item.State.HasFlag(FileStatus.NewInWorkdir))
                         status.Added += 1;
                     else if (item.State.HasFlag(FileStatus.ModifiedInIndex) ||
-                             item.State.HasFlag(FileStatus.ModifiedInWorkdir))
+                             item.State.HasFlag(FileStatus.ModifiedInWorkdir) ||
+                             item.State.HasFlag(FileStatus.RenamedInIndex) ||
+                             item.State.HasFlag(FileStatus.RenamedInWorkdir))
                         status.Modified += 1;
+                    else
+                        status.Other += 1;
                 }
                 
                 return status;
