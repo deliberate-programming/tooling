@@ -43,7 +43,7 @@ namespace dp_record
             
             bool pending_changes_exist() => status.Modified + status.Added + status.Deleted + status.Other > 0;
             
-            string message() => $"Auto-commit after {_stopwatch.RunningTime.TotalMinutes} minutes";
+            string message() => $"Auto-commit after {_stopwatch.RunningTime.TotalMinutes:F1}min";
         }
     }
 }
