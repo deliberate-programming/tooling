@@ -36,9 +36,10 @@ namespace dp_record
         
         
         void Commit_pending_changes() {
+            _screenshots.Capture();
+            
             var status = _git.Status;
             if (pending_changes_exist()) {
-                _screenshots.Capture();
                 _git.StageAllChanges();
                 var sha = _git.Commit(message(), "dp-record", "dp-record@deliberate-programming.org");
                 _log.Add(status, sha, _stopwatch.RunningTime);

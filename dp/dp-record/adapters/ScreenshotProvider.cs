@@ -7,6 +7,11 @@ using System.Runtime.InteropServices;
 
 namespace dp_record.adapters
 {
+    /*
+     * Taking screenshots:
+     *     - OSX: http://osxdaily.com/2011/08/11/take-screen-shots-terminal-mac-os-x/
+     *     - Win: https://nircmd.nirsoft.net/savescreenshot.html, nircmdc.exe is included with dp-record
+     */
     public interface IScreenshotProvider {
         void Capture();
     }
