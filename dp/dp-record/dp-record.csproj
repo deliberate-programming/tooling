@@ -10,4 +10,10 @@
       <ProjectReference Include="..\dp.git\dp.git.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="win\nircmdc.exe">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

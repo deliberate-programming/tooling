@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using dp.git;
 using dp_record.adapters;
 
@@ -10,18 +11,20 @@ namespace dp_record
         private readonly GitRepoProvider _git;
         private readonly Func<int, IRepeater> _repeaterFactory;
         private readonly Stopwatch _stopwatch;
+        private readonly IScreenshotProvider _screenshots;
 
-        public App(IConsoleLog log, GitRepoProvider git) : this(log, git, intervalSeconds => new Repeater(intervalSeconds)) {}
-        internal App(IConsoleLog log, GitRepoProvider git, Func<int,IRepeater> repeaterFactory) {
+        public App(IConsoleLog log, GitRepoProvider git, IScreenshotProvider screenshots) 
+            : this(log, git, screenshots, intervalSeconds => new Repeater(intervalSeconds)) {}
+        internal App(IConsoleLog log, GitRepoProvider git, IScreenshotProvider screenshots, Func<int,IRepeater> repeaterFactory) {
             _log = log;
             _git = git;
             _repeaterFactory = repeaterFactory;
             _stopwatch = new Stopwatch();
+            _screenshots = screenshots;
         }
 
 
-        public void Run(string[] args) {
-            var cli = new CLI(args);
+        public void Run(CLI cli) {
             using (var rep = _repeaterFactory(cli.IntervalSeconds))  {
                 _stopwatch.Start();
                 rep.StartInBackground(
@@ -35,6 +38,7 @@ namespace dp_record
         void Commit_pending_changes() {
             var status = _git.Status;
             if (pending_changes_exist()) {
+                _screenshots.Capture();
                 _git.StageAllChanges();
                 var sha = _git.Commit(message(), "dp-record", "dp-record@deliberate-programming.org");
                 _log.Add(status, sha, _stopwatch.RunningTime);

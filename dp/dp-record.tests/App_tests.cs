@@ -27,6 +27,7 @@ namespace dp_record.tests
                 var mockLog = new MockConsoleLog();
                 var sut = new App(mockLog, 
                                   new GitRepoProvider(repoPath),
+                                  new NoScreenshotsProvider(),
                                   _ => {
                                       rep = new MockRepeater();
                                       return rep;
@@ -34,7 +35,7 @@ namespace dp_record.tests
                 
                 // mockLog is blocking to keep the Repeater alive. Hence the App needs to run in the background.
                 ThreadPool.QueueUserWorkItem(_ => {
-                    sut.Run(new[]{"60"});
+                    sut.Run(new CLI(new[]{"60"}));
                 }, null);
                 Thread.Sleep(1000); // wait for everything to be initialized
                 
