@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace dp_record.adapters
 {
@@ -8,15 +9,34 @@ namespace dp_record.adapters
         
         public CLI(string[] args)
         {
-            if (args.Length < 1) args = new[] {DEFAULT_INTERVAL_SECONDS.ToString()};
-            
-            if (int.TryParse(args[0], out var intervalSeconds) is false) {
-                Console.Error.WriteLine($"Missing an integer parameter for interval seconds! Found instead: '{args[0]}'");
+            if (HasOption("help")) {
+                Console.WriteLine($"Usage: dp-record [<interval seconds>] [-noscreenshots]");
                 Environment.Exit(1);
             }
-            this.IntervalSeconds = intervalSeconds;
+
+            IntervalSeconds = GetIntervalSeconds();
+            TakeScreenshots = HasOption("noscreenshots") is false;
+            
+
+            int GetIntervalSeconds() {
+                foreach(var a in args) {
+                    if (int.TryParse(a, out var intervalSeconds))
+                        return intervalSeconds;
+                }
+                return DEFAULT_INTERVAL_SECONDS;
+            }
+
+            bool HasOption(string option)
+                => args.Any(a => a.Equals("-" + option, StringComparison.InvariantCultureIgnoreCase)) ||
+                   args.Any(a => a.Equals("--" + option, StringComparison.InvariantCultureIgnoreCase)) ||
+                   args.Any(a => a.Equals("/" + option, StringComparison.InvariantCultureIgnoreCase));
         }
 
+        
         public int IntervalSeconds { get; }
+        
+        public bool TakeScreenshots { get; }
+
+
     }
 }
