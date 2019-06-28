@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace dp_record.adapters
@@ -29,7 +30,7 @@ namespace dp_record.adapters
         private readonly Dictionary<OSPlatform, (string executable, string arguments)> _services =
             new Dictionary<OSPlatform, (string executable, string arguments)> {
                 {OSPlatform.OSX, ("screencapture", "-C -m -x -t jpg \"{0}\"")},
-                {OSPlatform.Windows, ("win/nircmdc.exe", "savescreenshot \"{0}\"")},
+                {OSPlatform.Windows, ("$dp-recorder/win/nircmdc.exe", "savescreenshot \"{0}\"")},
                 {OSPlatform.Linux, ("", "")}
             };
 
@@ -48,10 +49,13 @@ namespace dp_record.adapters
                             .First();
             if (service.executable == "") return;
 
-            var filepath = Path.Combine(_path, $"{DateTime.Now:s}.jpg").Replace(":", "-");
+            var executable = service.executable.Replace("$dp-recorder", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+
+            var filename = $"{DateTime.Now:yyyyMMdd-HHmmss}.jpg";
+            var filepath = Path.Combine(_path, filename);
             var arguments = string.Format(service.arguments, filepath);
             
-            Process.Start(service.executable, arguments)
+            Process.Start(executable, arguments)
                    .WaitForExit();
         }
     }
