@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace repeat
 {
+    //TODO: Rewrite Config in F# for easier parsing with a clearly defined syntax
     class Config
     {
         public Config(string[] args) {
